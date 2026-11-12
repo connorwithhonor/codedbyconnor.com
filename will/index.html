@@ -547,6 +547,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
           <button type="button" class="btn ghost" id="printBtn">Print or save PDF</button>
         </div>
         <p id="shareStatus" role="status" aria-live="polite"></p>
+        <p id="shareNotice" style="font-size:12.5px;line-height:1.45;opacity:.78;margin:8px 0 0">When you share from this page with your name and a phone or email filled in, Will Wheaton's office is told who shared so he can follow up with you. Leave those blank to share without it.</p>
         <details class="embedhelp">
           <summary>Put this calculator on a website</summary>
           <div class="field"><label for="embedFor">The embedded calculator opens on</label><div class="inwrap"><select id="embedFor"><option value="buyer">Buyer view</option><option value="seller">Seller view</option></select></div></div>
@@ -787,7 +788,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
   </footer>
 </div>
 
-<script>window.BD_BRAND={"coLic": "", "lockCaption": true, "dash": "\u2014", "cardDisc": "Illustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "captionTpl": "Illustrative {STRUCT} buydown scenario: {URL}\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "host": "codedbyconnor.com", "events": false, "orgLic": "", "logo": "https://codedbyconnor.com/will/logo.png", "plate": true, "lw": [300, 330, 230], "C": {"bg1": "#14240C", "bg2": "#22391A", "gold": "#E8C204", "white": "#F4F6F1", "muted": "#B3BFAA", "line": "rgba(255,255,255,.12)", "save": "#A6DD7E", "grey": "#5C6B55", "glowRGB": "232,194,4", "heroG": ["#FFF1A6", "#F0CF2A", "#C9A402"], "barG": ["#C9A402", "#FBE36B"], "soMo": "rgba(250,235,160,.9)", "pill": "232,194,4"}, "copy": "aug", "captionLock": "Illustrative {STRUCT} temporary payment subsidy. {STEPS} The note rate does not change.\nExplore the example: {URL}\nWill Wheaton Real Estate\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "coName": "Will Wheaton Real Estate"};</script><script>
+<script>window.BD_BRAND={"shareHook": "https://buydown-share-relay.connormacivor.workers.dev/e", "coLic": "", "lockCaption": true, "dash": "\u2014", "cardDisc": "Illustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "captionTpl": "Illustrative {STRUCT} buydown scenario: {URL}\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "host": "codedbyconnor.com", "events": false, "orgLic": "", "logo": "https://codedbyconnor.com/will/logo.png", "plate": true, "lw": [300, 330, 230], "C": {"bg1": "#14240C", "bg2": "#22391A", "gold": "#E8C204", "white": "#F4F6F1", "muted": "#B3BFAA", "line": "rgba(255,255,255,.12)", "save": "#A6DD7E", "grey": "#5C6B55", "glowRGB": "232,194,4", "heroG": ["#FFF1A6", "#F0CF2A", "#C9A402"], "barG": ["#C9A402", "#FBE36B"], "soMo": "rgba(250,235,160,.9)", "pill": "232,194,4"}, "copy": "aug", "captionLock": "Illustrative {STRUCT} temporary payment subsidy. {STEPS} The note rate does not change.\nExplore the example: {URL}\nWill Wheaton Real Estate\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "coName": "Will Wheaton Real Estate"};</script><script>
 (function(){
   const STRUCT = {
     "2-1":   {cuts:[2,1],   name:"2-1",   desc:"2% off in year 1, 1% off in year 2, full rate from year 3."},
@@ -1158,7 +1159,24 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
     for (let i=0;i<im.data.length;i+=4){ const v = Math.random()*255; im.data[i]=im.data[i+1]=im.data[i+2]=v; im.data[i+3]=14; } g.putImageData(im,0,0); return c; })();
   const BR = window.BD_BRAND || null;
   // anonymous usage pings (only editions that opt in); event names only, no personal data
-  window.bdTrack = e => { try { if (BR && BR.events && navigator.sendBeacon) navigator.sendBeacon("/api/event", new Blob([JSON.stringify({ e })], { type: "application/json" })); } catch(err){} };
+  window.bdTrack = e => { try { if (BR && BR.events && navigator.sendBeacon) navigator.sendBeacon("/api/event", new Blob([JSON.stringify({ e })], { type: "application/json" }));
+    // share alerts (editions with BR.shareHook): tells the lender who shared, only when the sharer entered a name plus a phone or email
+    if (BR && BR.shareHook && e !== "view" && e !== "embedview") {
+      const g = id => { const el = document.getElementById(id); return el && el.value ? el.value.trim() : ""; };
+      // who shared: link/embed/print buttons use the "name on the client page" fields; Share Studio buttons use its own fields
+      const studio = /^(png|mp4|flyerpdf|caption|social)/.test(e);
+      const name = studio ? g("ssName") : g("agName"), phone = studio ? g("ssContact") : g("agPhone"), email = studio ? g("ssEmail") : "";
+      const dig = v => String(v || "").replace(/\D/g, "").slice(-10), low = v => String(v || "").toLowerCase();
+      // the lender sharing his own page is not news to him
+      const isLender = (phone && dig(phone) === dig(g("loPhone"))) || (email && low(email) === low(g("loEmail"))) || (!!name && low(name) === low(g("loName")));
+      if (name && (phone || email) && !isLender) {
+        let link = ""; try { link = clientUrl(e === "sellerlink" ? "seller" : "buyer", false); } catch (x) {}
+        let r = ""; try { r = role; } catch (x) {}
+        fetch(BR.shareHook, { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ event: e, name, phone, email, company: studio ? g("ssOrg") : "", role: studio ? r : "agent", license: studio ? g("ssLic") : "", link, page: location.origin + location.pathname }) }).catch(() => {});
+      }
+    }
+  } catch(err){} };
   window.bdTrack("view");
   const syncImg = new Image(); if (!(BR && BR.nologo)) syncImg.src = (BR && BR.logo) || "sync-dark.png";
   const syncReady = new Promise(res => { if (!syncImg.src || (syncImg.complete && syncImg.naturalWidth)) res(); else { syncImg.onload = res; syncImg.onerror = res; setTimeout(res, 4000); } });
@@ -1291,9 +1309,9 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
     [[struct+" buydown, yr 1", y1.save, C.gold], ["Same $ as a price cut", D.cut, C.grey]].forEach((b, i) => {
       const yy = by + i*L.barRow*u; ctx.globalAlpha = ease(ph(t, revealBase + 0.9 + i*0.15, revealBase + 1.3 + i*0.15));
       ctx.fillStyle = C.white; ctx.font = F("600", L.labFont*u); ctx.fillText(b[0], barX, yy + L.barH*0.78*u);
-      const w = Math.max(10*u, track * (b[1]/Math.max(y1.save,1)) * bk);
+      const w0 = track * (b[1]/Math.max(y1.save,1)) * bk; const w = Math.max(10*u, isFinite(w0) ? w0 : 0);
       ctx.fillStyle = "rgba(255,255,255,.06)"; roundRect(ctx, barX + labW, yy, track, L.barH*u, 8*u); ctx.fill();
-      if (i === 0) { const bg = ctx.createLinearGradient(barX + labW, 0, barX + labW + w, 0); bg.addColorStop(0, C.barG[0]); bg.addColorStop(1, C.barG[1]); ctx.fillStyle = bg; } else ctx.fillStyle = b[2];
+      if (i === 0 && isFinite(barX + labW + w)) { const bg = ctx.createLinearGradient(barX + labW, 0, barX + labW + w, 0); bg.addColorStop(0, C.barG[0]); bg.addColorStop(1, C.barG[1]); ctx.fillStyle = bg; } else ctx.fillStyle = b[2];
       roundRect(ctx, barX + labW, yy, w, L.barH*u, 8*u); ctx.fill();
       ctx.fillStyle = i ? C.muted : C.gold; ctx.font = F("800", L.barFont*u, "d"); ctx.fillText("−"+usd(b[1]*bk)+"/mo", barX + labW + Math.max(w, i ? w : track) + 12*u, yy + L.barH*0.82*u);
     });
@@ -1455,6 +1473,7 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
     $("ssX").href = "https://twitter.com/intent/tweet?text="+encodeURIComponent("Seller-paid "+struct+" buydown math, run your own numbers:")+"&url="+link;
     $("ssMail").href = "mailto:?subject="+encodeURIComponent("Buydown numbers")+"&body="+txt;
     $("ssSms").href = "sms:?&body="+txt;
+    if (!window.__bdSocialBound) { window.__bdSocialBound = 1; [["ssFb","facebook"],["ssLi","linkedin"],["ssX","x"],["ssMail","email"],["ssSms","text"]].forEach(([id,k]) => { const a = $(id); if (a) a.addEventListener("click", () => window.bdTrack && window.bdTrack("social:"+k)); }); }
     $("ssAprWarn").hidden = !!SS.apr.value.trim();
   }
 
