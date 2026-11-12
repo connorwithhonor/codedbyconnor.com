@@ -787,7 +787,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
   </footer>
 </div>
 
-<script>window.BD_BRAND={"coLic": "", "lockCaption": true, "dash": "\u2014", "cardDisc": "Illustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "captionTpl": "Illustrative {STRUCT} buydown scenario: {URL}\\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "host": "codedbyconnor.com", "events": false, "orgLic": "", "logo": "https://codedbyconnor.com/will/logo.png", "plate": true, "lw": [300, 330, 230], "C": {"bg1": "#14240C", "bg2": "#22391A", "gold": "#E8C204", "white": "#F4F6F1", "muted": "#B3BFAA", "line": "rgba(255,255,255,.12)", "save": "#A6DD7E", "grey": "#5C6B55", "glowRGB": "232,194,4", "heroG": ["#FFF1A6", "#F0CF2A", "#C9A402"], "barG": ["#C9A402", "#FBE36B"], "soMo": "rgba(250,235,160,.9)", "pill": "232,194,4"}, "copy": "aug", "captionLock": "Illustrative {STRUCT} temporary payment subsidy. {STEPS} The note rate does not change.\\nExplore the example: {URL}\\nWill Wheaton Real Estate\\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "coName": "Will Wheaton Real Estate"};</script><script>
+<script>window.BD_BRAND={"coLic": "", "lockCaption": true, "dash": "\u2014", "cardDisc": "Illustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "captionTpl": "Illustrative {STRUCT} buydown scenario: {URL}\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "host": "codedbyconnor.com", "events": false, "orgLic": "", "logo": "https://codedbyconnor.com/will/logo.png", "plate": true, "lw": [300, 330, 230], "C": {"bg1": "#14240C", "bg2": "#22391A", "gold": "#E8C204", "white": "#F4F6F1", "muted": "#B3BFAA", "line": "rgba(255,255,255,.12)", "save": "#A6DD7E", "grey": "#5C6B55", "glowRGB": "232,194,4", "heroG": ["#FFF1A6", "#F0CF2A", "#C9A402"], "barG": ["#C9A402", "#FBE36B"], "soMo": "rgba(250,235,160,.9)", "pill": "232,194,4"}, "copy": "aug", "captionLock": "Illustrative {STRUCT} temporary payment subsidy. {STEPS} The note rate does not change.\nExplore the example: {URL}\nWill Wheaton Real Estate\nIllustrative concept for Will Wheaton, not a loan offer, quote, endorsement or approved lending advertisement. Inputs are examples, not current available rates. Lender review, verified licensing and required disclosures are necessary before consumer advertising. Principal and interest only unless additional costs are entered; taxes, insurance, mortgage insurance and HOA may increase the actual payment. Eligibility, contribution limits and funding are subject to lender and program rules.", "coName": "Will Wheaton Real Estate"};</script><script>
 (function(){
   const STRUCT = {
     "2-1":   {cuts:[2,1],   name:"2-1",   desc:"2% off in year 1, 1% off in year 2, full rate from year 3."},
@@ -832,13 +832,14 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
 
   const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function tween(el, to, fmt){
+    if (el._countFrame) cancelAnimationFrame(el._countFrame);
     const from = parseFloat(el.dataset.v || "0");
     el.dataset.v = to;
     if (RM || from === to) { el.textContent = fmt(to); return; }
     const t0 = performance.now(), dur = 550;
     el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
-    const step = now => { const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,3); el.textContent = fmt(from+(to-from)*e); if (k<1) requestAnimationFrame(step); };
-    requestAnimationFrame(step);
+    const step = now => { const k = Math.min(1,(now-t0)/dur), e = 1-Math.pow(1-k,3); el.textContent = fmt(from+(to-from)*e); if (k<1) el._countFrame = requestAnimationFrame(step); };
+    el._countFrame = requestAnimationFrame(step);
   }
   function pmt(L, annualPct, years){
     const n = years*12, r = annualPct/100/12;
@@ -980,10 +981,10 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
     const sig = ED==="lender" ? [lv("loName"), lv("loCo"), lv("loNmls")?"NMLS #"+lv("loNmls"):"", lv("loPhone")].filter(Boolean).join(" · ") : "";
     const yrsTxt = s.years.map(y=>"year "+y.year+" at "+pct(y.rate)+" ("+usd(y.pay)+"/mo)").join(", ");
 
-    $("sp1").textContent = " On this home, "+usd(cut)+" as a price cut lowers the payment about "+usd(cutSave)+"/mo. As a "+struct+" buydown it lowers year 1 by "+usd(y1.save)+"/mo.";
-    $("bp1").textContent = " On this loan the "+struct+" drops your payment by "+usd(y1.save)+"/mo in year 1, covering moving costs, furniture and the first years of ownership.";
-    $("bp4").textContent = " From year "+(s.years.length+1)+" the payment is "+usd(s.full)+"/mo. Make sure that number works for you today.";
-    $("lp1").textContent = " On a "+usd(d.price)+" sale, "+usd(cut)+" buys "+usd(y1.save)+"/mo of year-1 relief as a "+struct+", versus "+usd(cutSave)+"/mo as a price cut.";
+    if ($("sp1")) $("sp1").textContent = " On this home, "+usd(cut)+" as a price cut lowers the payment about "+usd(cutSave)+"/mo. As a "+struct+" buydown it lowers year 1 by "+usd(y1.save)+"/mo.";
+    if ($("bp1")) $("bp1").textContent = " On this loan the "+struct+" drops your payment by "+usd(y1.save)+"/mo in year 1, covering moving costs, furniture and the first years of ownership.";
+    if ($("bp4")) $("bp4").textContent = " From year "+(s.years.length+1)+" the payment is "+usd(s.full)+"/mo. Make sure that number works for you today.";
+    if ($("lp1")) $("lp1").textContent = " On a "+usd(d.price)+" sale, "+usd(cut)+" buys "+usd(y1.save)+"/mo of year-1 relief as a "+struct+", versus "+usd(cutSave)+"/mo as a price cut.";
 
     $("scSeller").textContent =
 "On a "+usd(d.price)+" price, a "+struct+" buydown costs about "+usd(cut)+". That is the same money as a "+usd(cut)+" price cut.\n\n"+
@@ -1105,7 +1106,7 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
     $("ssOrgLicLbl").innerHTML = (r==="lo" ? "Company NMLS #" : "Brokerage DRE #")+' <span class="opt">(optional)</span>';
     const st = $("share"); st.classList.toggle("role-lo", r==="lo");
     st.classList.toggle("has-disc", !!(window.BD_BRAND && window.BD_BRAND.cardDisc));
-    if (window.BD_BRAND && window.BD_BRAND.lockCaption) { SS.caption.readOnly = true; SS.caption.title = "Caption is locked to approved wording."; }
+    if (window.BD_BRAND && window.BD_BRAND.lockCaption) { SS.caption.readOnly = true; SS.caption.title = "Caption is locked to demonstration wording, not lender-approved advertising."; }
   }
   function missing(){
     const m = []; if (!SS.name.value.trim()) m.push("your name"); if (!SS.lic.value.trim()) m.push(role==="lo" ? "your NMLS #" : "your CalDRE #"); if (!SS.org.value.trim()) m.push(role==="lo" ? "company name" : "brokerage name");
@@ -1129,7 +1130,7 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
       if (!SS.dre.value) SS.dre.value = $("loDre").value;
       if (!SS.title.value) SS.title.value = $("loTitle").value;
       if (!SS.email.value) SS.email.value = $("loEmail").value;
-      if (BR && BR.lockCaption) { SS.caption.readOnly = true; SS.caption.title = "Caption is locked to approved wording."; }
+      if (BR && BR.lockCaption) { SS.caption.readOnly = true; SS.caption.title = "Caption is locked to demonstration wording, not lender-approved advertising."; }
     } else {
       setRole("agent");
       if (!SS.name.value) SS.name.value = "Connor MacIvor";
@@ -1428,7 +1429,7 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
     if (fmt === "flyer") { preview(); return; }
     const t0 = performance.now(); const id = ++playing; anim = true;
     const step = now => { if (id !== playing) return; const t = (now - t0)/1000; preview(Math.min(t, T_END)); if (t < T_END) requestAnimationFrame(step); else anim = false; };
-    requestAnimationFrame(step);
+    el._countFrame = requestAnimationFrame(step);
   }
   function captionText(){
     const D = cardData(), y1 = D.s.years[0];
