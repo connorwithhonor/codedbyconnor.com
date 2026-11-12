@@ -774,7 +774,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-si
         <span>Text <strong class="num">661-400-1720</strong></span>
       </div>
       <div class="only-lender">
-        <b id="ftLo">Will Wheaton · Will Wheaton Real Estate</b>
+        <b id="ftLo">Will Wheaton · Will Wheaton Real Estate · Next Level Home Lending</b>
         <span class="augft">Illustrative concept • Lender review required</span>
       </div>
       <span class="eho">Equal Housing Opportunity</span>
@@ -1801,7 +1801,7 @@ rateTxt + "the loan’s note rate remains " + pct(d.rate) + ".\n\n" +
       const fromUrl = q.get(k.slice(2).toLowerCase());
       let v = fromUrl;
       if (v == null) { try { v = localStorage.getItem("will-bd-"+k); } catch(e){} }
-      if (v == null || v === "") v = {loName:"Will Wheaton", loCo:"Will Wheaton Real Estate", loNmls:"", loDre:"", loTitle:"", loEmail:"info@willwheatonrealestate.com", loPhone:"213-445-2277"}[k] || "";
+      if (v == null || v === "") v = {loName:"Will Wheaton", loCo:"Next Level Home Lending", loNmls:"1670194", loDre:"01857540", loTitle:"Broker and Loan Officer", loEmail:"info@willwheatonrealestate.com", loPhone:"213-445-2277"}[k] || "";
       if (v) $(k).value = v;
       $(k).addEventListener("input", () => { try { localStorage.setItem("will-bd-"+k, $(k).value); } catch(e){} render(); });
     });
